@@ -3,14 +3,17 @@
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const Navbar = () => {
   const { data: session } = useSession();
-  //console.log(session);
+  const datas: any = useSelector((state: RootState) => state.user.selectedUser);
+  console.log(datas);
   return (
     <div className="flex justify-between items-center w-full h-16 bg-[#101424] shadow shadow-[#251b30] px-6 text-white">
       <div>
-        {session && (
+        {session && session.user && (
           <div className="flex justify-start items-center gap-4">
             <div className="dropdown">
               <div tabIndex={0} role="button" className=" m-1">
@@ -39,6 +42,12 @@ const Navbar = () => {
           </div>
         )}
       </div>
+      {datas && (
+        <div className="text-white">
+          <div></div>
+          <div>{datas?.name}</div>
+        </div>
+      )}
     </div>
   );
 };
